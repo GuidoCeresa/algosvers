@@ -1,4 +1,4 @@
-grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
+grails.servlet.version = "3.0"
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
@@ -7,21 +7,22 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}-${appVersion}.war"
 
-//grails.project.fork = [
-//    // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
-//    //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
-//
-//    // configure settings for the test-app JVM, uses the daemon by default
-//    test: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
-//    // configure settings for the run-app JVM
-//    run: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
-//    // configure settings for the run-war JVM
-//    war: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
-//    // configure settings for the Console UI JVM
-//    console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
-//]
+//--eventualmente disabilitare per il funzionamenteo in debug
+grails.project.fork = [
+        // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
+        //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
 
-grails.project.dependency.resolver = "maven" // or ivy
+        // configure settings for the test-app JVM, uses the daemon by default
+        test: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
+        // configure settings for the run-app JVM
+        run: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
+        // configure settings for the run-war JVM
+        war: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
+        // configure settings for the Console UI JVM
+        console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
+]
+
+grails.project.dependency.resolver = "maven"
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
@@ -33,6 +34,8 @@ grails.project.dependency.resolution = {
     legacyResolve false // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
 
     repositories {
+        inherits true // Whether to inherit repository definitions from plugins
+
         grailsPlugins()
         grailsHome()
         mavenLocal()
@@ -54,20 +57,19 @@ grails.project.dependency.resolution = {
 
     plugins {
         // plugins for the build system only
-        build ":tomcat:7.0.53"
+        build ":tomcat:7.0.54"
         build ":release:3.0.1"
 
         // plugins for the compile step
-        compile ":scaffolding:2.1.0"
+        compile ":scaffolding:2.1.1"
         compile ':cache:1.1.6'
-        compile ":asset-pipeline:1.8.7"
+        compile ":asset-pipeline:1.8.11"
 
         // plugins needed at runtime but not for compilation
-        runtime ":hibernate4:4.3.5.3" // or ":hibernate:3.6.10.15"
+        runtime ":hibernate4:4.3.5.4"
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
 
-        // Uncomment these to enable additional asset-pipeline capabilities
     }// fine della closure plugins
 }// fine di grails.project.dependency.resolution
 
@@ -75,3 +77,14 @@ grails.project.repos.algosRepo.url = "http://77.43.32.198:8080/artifactory/plugi
 grails.project.repos.algosRepo.type = "maven"
 grails.project.repos.algosRepo.username = "admin"
 grails.project.repos.algosRepo.password = "password"
+
+// This closure is passed the command line arguments
+// used to start the war process.
+//grails.war.copyToWebApp = { args ->
+//    fileset(dir: "web-app") {
+//        include(name: "css/**")
+//        include(name: "images/**")
+//        include(name: "js/**")
+//        include(name: "WEB-INF/**")
+//    }// fine della closure fileset
+//}// fine di grails.war.copyToWebApp
