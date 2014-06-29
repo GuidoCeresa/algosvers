@@ -25,7 +25,7 @@ print('Algosvers - creato (NON sovrascritto) VersioneBootStrap')
 print('------------')
 
 // copy Readme into project
-sourceFile = "${pluginBasedir}/grails-app/Readme"
+sourceFile = "${pluginBasedir}/README"
 targetFile = "${basedir}/README-Vers"
 ant.copy(file: sourceFile, tofile: targetFile, overwrite: true)
 ant.delete(file: sourceFile)
