@@ -14,7 +14,7 @@ String confDir = "${appDir}conf/"
 String i18Dir = "${appDir}i18n/"
 
 // copy readme into project
-moveFile(source, dest, "${appDir}README", "README-Vers")
+copyFile(source, dest, "${appDir}README", "README-Vers")
 print('------------')
 print('Algosvers - creato (o sovrascritto) README-Vers')
 print('------------')
@@ -26,13 +26,25 @@ print('Algosvers - creato (NON sovrascritto) VersioneBootStrap')
 print('------------')
 
 // copy i18n into project
-moveFile(source, dest, "${i18Dir}algosvers.properties")
+copyFile(source, dest, "${i18Dir}algosvers.properties")
 print('------------')
 print('Algosvers - creato (o sovrascritto) grails-app/i18n/algosvers.properties')
 print('------------')
 
+public static copyFile(String srcDirPath, String dstDirPath, String fileName) {
+    copyFile(srcDirPath, dstDirPath, fileName, fileName)
+} // fine del metodo
+
 public static moveFile(String srcDirPath, String dstDirPath, String fileName) {
     moveFile(srcDirPath, dstDirPath, fileName, fileName)
+} // fine del metodo
+
+public static copyFile(String srcDirPath, String dstDirPath, String srcFileName, String dstFileName) {
+    String srcFile = srcDirPath + srcFileName
+    String destFile = dstDirPath + dstFileName
+
+    copyFile(srcFile, destFile)
+    deleteFile(srcFile)
 } // fine del metodo
 
 public static moveFile(String srcDirPath, String dstDirPath, String srcFileName, String dstFileName) {
@@ -44,4 +56,8 @@ public static moveFile(String srcDirPath, String dstDirPath, String srcFileName,
 
 public static copyFile(String srcFile, String destFile) {
     new AntBuilder().copy(file: srcFile, tofile: destFile, overwrite: true)
+} // fine del metodo
+
+public static deleteFile(String pathFile) {
+    new AntBuilder().delete(file: pathFile)
 } // fine del metodo
